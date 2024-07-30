@@ -14,13 +14,9 @@ import {
 import Cookies from "js-cookie";
 
 const SidebarMenu = ({ className }: any) => {
-  // const name = localStorage.getItem("name");
   const name = Cookies.get("name");
 
   const LogOut = () => {
-    // localStorage.removeItem("token");
-    // localStorage.removeItem("userId");
-    // localStorage.removeItem("email");
 
     Cookies.remove("token");
     Cookies.remove("userId");

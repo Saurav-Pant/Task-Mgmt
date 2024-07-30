@@ -17,11 +17,9 @@ const TaskDashboard: React.FC = () => {
   const [tasks, setTasks] = useState<TaskType[]>([]);
   const [token, setToken] = useState<string | null>(null);
 
-  // const name = localStorage.getItem("name");
   const name = Cookies.get("name");
 
   useEffect(() => {
-    // const storedToken = localStorage.getItem("token");
     const storedToken = Cookies.get("token");
     if (storedToken) {
       setToken(storedToken);

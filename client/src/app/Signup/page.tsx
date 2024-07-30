@@ -31,10 +31,6 @@ const Page = () => {
       const data = await response.json();
       console.log(data)
       
-      // localStorage.setItem('token', data.token);
-      // localStorage.setItem('userId', JSON.stringify(data.user.id));
-      // localStorage.setItem('name', data.user.name);
-
       Cookies.set('token', data.token);
       Cookies.set('userId', JSON.stringify(data.user.id));
       Cookies.set('name', data.user.name);

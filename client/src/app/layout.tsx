@@ -5,8 +5,8 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Trello Like app",
-  description: "Created a Trello Like Application using Next.js",
+  title: "Task Management Application",
+  description: "Task Management Application",
 };
 
 export default function RootLayout({

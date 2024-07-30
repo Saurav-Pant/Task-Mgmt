@@ -24,7 +24,6 @@ const page = ({ status }:any) => {
       setError("Please fill in all required fields.");
       return;
     }
-    // const token = localStorage.getItem("token");
     const token = Cookies.get('token')
 
     const task = {
@@ -76,18 +75,6 @@ const page = ({ status }:any) => {
           <div className="flex items-center">
             <Loader size={20} className="mr-2 text-gray-500" />
             <span className="w-24 text-gray-500">Status</span>
-            {/* <select
-              value={status}
-              onChange={(e) => setStatus(e.target.value)}
-              className="flex-grow p-1 border rounded resize"
-            >
-              <option value="">Not Selected</option>
-              <option value="TODO">To do</option>
-              <option value="INPROGRESS">In Progress</option>
-              <option value="UNDERREVIEW">Under Review</option>
-              <option value="COMPLETED">Completed</option>
-            </select> */}
-
             <input
               type="text"
               value={status}

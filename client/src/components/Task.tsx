@@ -70,7 +70,6 @@ const TaskCard = ({ task }: any) => {
 
   const handleEdit = async () => {
     try {
-      // const token = localStorage.getItem("token");
       const token = Cookies.get('token')
       const response = await fetch(`https://task-mgmt-e8us.onrender.com/tasks/${task.id}`, {
         method: "PUT",
@@ -96,7 +95,6 @@ const TaskCard = ({ task }: any) => {
 
   const handleDelete = async () => {
     try {
-      // const token = localStorage.getItem("token");
       const token = Cookies.get('token')
       const response = await fetch(`https://task-mgmt-e8us.onrender.com/tasks/${task.id}`, {
         method: "DELETE",
