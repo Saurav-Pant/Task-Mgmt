@@ -34,7 +34,7 @@ const TaskCard = ({ status }: { status: string }) => {
     };
 
     try {
-      const response = await fetch("http://localhost:3002/tasks", {
+      const response = await fetch("https://task-mgmt-e8us.onrender.com/tasks", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

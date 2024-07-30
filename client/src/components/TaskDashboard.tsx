@@ -27,7 +27,7 @@ const TaskDashboard: React.FC = () => {
   }, []);
 
   const fetchTasks = (authToken: string) => {
-    fetch("http://localhost:3002/tasks", {
+    fetch("https://task-mgmt-e8us.onrender.com/tasks", {
       headers: {
         Authorization: `Bearer ${authToken}`,
       },
@@ -41,7 +41,7 @@ const TaskDashboard: React.FC = () => {
   };
 
   const moveTask = (id: string, newStatus: string) => {
-    fetch(`http://localhost:3002/tasks/${id}/status`, {
+    fetch(`https://task-mgmt-e8us.onrender.com/tasks/${id}/status`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

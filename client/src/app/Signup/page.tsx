@@ -15,7 +15,7 @@ const Page = () => {
     setError('');
 
     try {
-      const response = await fetch('http://localhost:3002/auth/signup', {
+      const response = await fetch('https://task-mgmt-e8us.onrender.com/auth/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -90,7 +90,7 @@ const Page = () => {
           </button>
         </form>
         <p className="mt-4 text-center text-gray-500">
-          Already have an account?{' '}
+          Already have an account?
           <Link href="/login">
             <span className="text-[#0054A1] hover:underline cursor-pointer">
               Login
