@@ -1,5 +1,4 @@
-"use client";
-
+"use client"
 import React, { useState } from "react";
 import { Clock, Edit, Trash2 } from "lucide-react";
 import { useDrag } from "react-dnd";
@@ -22,10 +21,12 @@ import {
 } from "@/components/ui/select";
 import { ItemType } from "../types";
 import Cookies from "js-cookie";
+import LoadingSpinner from "./LoadingSpinner";
 
 const TaskCard = ({ task }: any) => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editedTask, setEditedTask] = useState(task);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [{ isDragging }, drag] = useDrag(() => ({
     type: ItemType.TASK,
@@ -40,10 +41,6 @@ const TaskCard = ({ task }: any) => {
 
   const date = deadline.toLocaleDateString();
   const CreatedAtDate = CreatedAt.toISOString();
-
-
-
-  
 
   const calculateTimeAgo = (deadline: string): string => {
     const now = new Date();
@@ -68,17 +65,24 @@ const TaskCard = ({ task }: any) => {
     }
   };
 
+  const Backend_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+
+
   const handleEdit = async () => {
+    setIsLoading(true);
     try {
-      const token = Cookies.get('token')
-      const response = await fetch(`https://task-mgmt-e8us.onrender.com/tasks/${task.id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(editedTask),
-      });
+      const token = Cookies.get("token");
+      const response = await fetch(
+        `${Backend_URL}/tasks/${task.id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(editedTask),
+        }
+      );
 
       if (response.ok) {
         const updatedTask = await response.json();
@@ -90,27 +94,35 @@ const TaskCard = ({ task }: any) => {
       }
     } catch (error) {
       console.error("Error updating task:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleDelete = async () => {
+    setIsLoading(true);
     try {
-      const token = Cookies.get('token')
-      const response = await fetch(`https://task-mgmt-e8us.onrender.com/tasks/${task.id}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const token = Cookies.get("token");
+      const response = await fetch(
+        `${Backend_URL}/tasks/${task.id}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       if (response.ok) {
-        window.location.reload();
         console.log("Successfully deleted task");
+        window.location.reload();
       } else {
         console.error("Failed to delete task");
       }
     } catch (error) {
       console.error("Error deleting task:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -158,7 +170,7 @@ const TaskCard = ({ task }: any) => {
       <div className="absolute bottom-2 right-2 flex gap-2">
         <Dialog open={isEditModalOpen} onOpenChange={setIsEditModalOpen}>
           <DialogTrigger asChild>
-            <Button variant="ghost" size="icon" >
+            <Button variant="ghost" size="icon">
               <Edit size={16} />
             </Button>
           </DialogTrigger>
@@ -183,7 +195,7 @@ const TaskCard = ({ task }: any) => {
               />
               <Select
                 value={editedTask.priority}
-                onValueChange={(value:any) =>
+                onValueChange={(value: any) =>
                   setEditedTask({ ...editedTask, priority: value })
                 }
               >
@@ -206,7 +218,7 @@ const TaskCard = ({ task }: any) => {
               />
               <Select
                 value={editedTask.status}
-                onValueChange={(value:any) =>
+                onValueChange={(value: any) =>
                   setEditedTask({ ...editedTask, status: value })
                 }
               >
@@ -221,11 +233,13 @@ const TaskCard = ({ task }: any) => {
                 </SelectContent>
               </Select>
             </div>
-            <Button onClick={handleEdit}>Save Changes</Button>
+            <Button onClick={handleEdit} disabled={isLoading}>
+              {isLoading ? <LoadingSpinner /> : "Save Changes"}
+            </Button>
           </DialogContent>
         </Dialog>
-        <Button variant="ghost" size="icon" onClick={handleDelete}>
-          <Trash2 size={16} className="text-red-500"/>
+        <Button variant="ghost" size="icon" onClick={handleDelete} disabled={isLoading}>
+          {isLoading ? <LoadingSpinner /> : <Trash2 size={16} className="text-red-500" />}
         </Button>
       </div>
     </div>

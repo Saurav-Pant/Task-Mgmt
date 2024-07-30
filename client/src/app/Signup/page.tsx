@@ -3,20 +3,27 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { useRouter } from 'next/navigation';
 import Cookies from "js-cookie";
+import Spinner from "@/components/LoadingSpinner"
+
 
 const Page = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false); 
   const router = useRouter();
+  const Backend_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
   const handleSubmit = async (e:any) => {
     e.preventDefault();
     setError('');
+    setIsLoading(true); 
+
+
 
     try {
-      const response = await fetch('https://task-mgmt-e8us.onrender.com/auth/signup', {
+      const response = await fetch(`${Backend_URL}/auth/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -39,6 +46,9 @@ const Page = () => {
     } catch (err) {
       setError('Failed to sign up. Please try again.');
       console.error('Signup error:', err);
+    }
+    finally{
+      setIsLoading(false); 
     }
   };
 
@@ -84,15 +94,16 @@ const Page = () => {
             />
           </div>
           <button
-            type="submit"
-            className="w-full p-3 rounded-lg text-white bg-gradient-to-r from-[#4B36CC] to-[#9C93D4] hover:opacity-90 transition duration-300"
-          >
-            Sign up
-          </button>
+              type="submit"
+              className="w-full p-2 rounded-lg text-white relative border-1 bg-gradient-to-r from-[#4B36CC] to-[#9C93D4] hover:opacity-90 transition duration-300"
+              disabled={isLoading} 
+            >
+              {isLoading ? <Spinner /> : 'Sign Up'} 
+            </button>
         </form>
         <p className="mt-4 text-center text-gray-500">
           Already have an account?
-          <Link href="/login">
+          <Link href="/Login">
             <span className="text-[#0054A1] hover:underline cursor-pointer">
               Login
             </span>

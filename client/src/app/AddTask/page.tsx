@@ -3,29 +3,29 @@
 import React, { useState } from "react";
 import { Plus, Loader, Calendar, PenTool, AlertCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
-import Cookies from 'js-cookie'
+import Cookies from "js-cookie";
+import Spinner from "@/components/LoadingSpinner";
 
-
-const page = ({ status }:any) => {
+const page = ({ status }: any) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [dateTime, setDateTime] = useState("");
   const [priority, setPriority] = useState("Not Selected");
   const [deadline, setDeadline] = useState("");
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
 
-
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-
+  
     if (!title) {
       setError("Please fill in all required fields.");
       return;
     }
-    const token = Cookies.get('token')
-
+    const token = Cookies.get("token");
+  
     const task = {
       title,
       description,
@@ -34,17 +34,25 @@ const page = ({ status }:any) => {
       deadline,
       status,
     };
+  
+    setIsLoading(true); 
 
+    const Backend_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+  
     try {
-      const response = await fetch("https://task-mgmt-e8us.onrender.com/tasks", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(task),
-      });
-
+      const response = await
+       fetch(
+        `${Backend_URL}/tasks`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(task),
+        }
+      );
+  
       if (response.ok) {
         const data = await response.json();
         console.log("Task created:", data);
@@ -56,10 +64,12 @@ const page = ({ status }:any) => {
       }
     } catch (error) {
       console.error("Error:", error);
+    } finally {
+      setIsLoading(false); 
     }
     setError("");
   };
-
+  
   return (
     <form onSubmit={handleSubmit} className="bg-white">
       <div className="p-4">
@@ -145,8 +155,9 @@ const page = ({ status }:any) => {
         <button
           type="submit"
           className="w-full bg-gradient-to-b from-[#4C38C2] to-[#2F2188] text-white p-2 rounded"
+          disabled={isLoading}
         >
-          Create Task
+          {isLoading ? <Spinner /> : "Create Task"}
         </button>
       </div>
     </form>

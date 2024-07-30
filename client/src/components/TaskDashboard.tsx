@@ -27,8 +27,11 @@ const TaskDashboard: React.FC = () => {
     }
   }, []);
 
+  const Backend_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+
+
   const fetchTasks = (authToken: string) => {
-    fetch("https://task-mgmt-e8us.onrender.com/tasks", {
+      fetch(`${Backend_URL}/tasks`, {
       headers: {
         Authorization: `Bearer ${authToken}`,
       },
@@ -42,7 +45,7 @@ const TaskDashboard: React.FC = () => {
   };
 
   const moveTask = (id: string, newStatus: string) => {
-    fetch(`https://task-mgmt-e8us.onrender.com/tasks/${id}/status`, {
+    fetch(`${Backend_URL}/tasks/${id}/status`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

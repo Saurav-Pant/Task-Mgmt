@@ -64,7 +64,7 @@ const Column: React.FC<ColumnProps> = ({ status, tasks, moveTask }) => {
         <TaskCardModal
           isOpen={isModalOpen}
           onClose={closeModal}
-          status={status} // Pass the status prop
+          status={status} 
         />
       </div>
     </div>

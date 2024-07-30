@@ -3,19 +3,25 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { useRouter } from 'next/navigation';
 import Cookies from "js-cookie";
+import Spinner from "@/components/LoadingSpinner"; 
 
 const Page = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false); 
   const router = useRouter();
 
-  const handleSubmit = async (e:any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     setError('');
+    setIsLoading(true); 
+
+    const Backend_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+    
 
     try {
-      const response = await fetch('https://task-mgmt-e8us.onrender.com/auth/login', {
+      const response = await fetch(`${Backend_URL}/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -29,18 +35,16 @@ const Page = () => {
 
       const data = await response.json();
 
-
       Cookies.set('token', data.token);
       Cookies.set('userId', JSON.stringify(data.user.id));
       Cookies.set('name', data.user.name);
 
-
-
-      
       router.push('/Dashboard');
     } catch (err) {
       setError('Invalid email or password. Please try again.');
       console.error('Login error:', err);
+    } finally {
+      setIsLoading(false); 
     }
   };
 
@@ -78,8 +82,9 @@ const Page = () => {
             <button
               type="submit"
               className="w-full p-2 rounded-lg text-white relative border-1 bg-gradient-to-r from-[#4B36CC] to-[#9C93D4] hover:opacity-90 transition duration-300"
+              disabled={isLoading} 
             >
-              Login
+              {isLoading ? <Spinner /> : 'Login'} 
             </button>
           </form>
           <p className="mt-4 text-center text-gray-500">
