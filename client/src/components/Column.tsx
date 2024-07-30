@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { useDrop } from "react-dnd";
 import { ItemType, TaskType } from "../types";
 import Task from "./Task";
-import { AddTaskButton } from "./TaskButton";
+import  AddTaskButton  from "./TaskButton";
 import { TaskCardModal } from "./TaskCardModel";
 import Image from "next/image";
 import Frame from "../../Assets/Frame.png";

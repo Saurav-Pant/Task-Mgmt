@@ -2,6 +2,7 @@
 import Link from "next/link";
 import React, { useState } from "react";
 import { useRouter } from 'next/navigation';
+import Cookies from "js-cookie";
 
 const Page = () => {
   const [email, setEmail] = useState('');
@@ -28,9 +29,15 @@ const Page = () => {
 
       const data = await response.json();
 
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('userId', JSON.stringify(data.user.id));
-      localStorage.setItem('name', data.user.name);
+      // localStorage.setItem('token', data.token);
+      // localStorage.setItem('userId', JSON.stringify(data.user.id));
+      // localStorage.setItem('name', data.user.name);
+
+      Cookies.set('token', data.token);
+      Cookies.set('userId', JSON.stringify(data.user.id));
+      Cookies.set('name', data.user.name);
+
+
 
       
       router.push('/Dashboard');

@@ -11,15 +11,18 @@ import Image from "next/image";
 import First from "../../Assets/First.png";
 import Second from "../../Assets/Second.png";
 import Third from "../../Assets/Third.png";
+import Cookies from "js-cookie";
 
 const TaskDashboard: React.FC = () => {
   const [tasks, setTasks] = useState<TaskType[]>([]);
   const [token, setToken] = useState<string | null>(null);
 
-  const name = localStorage.getItem("name");
+  // const name = localStorage.getItem("name");
+  const name = Cookies.get("name");
 
   useEffect(() => {
-    const storedToken = localStorage.getItem("token");
+    // const storedToken = localStorage.getItem("token");
+    const storedToken = Cookies.get("token");
     if (storedToken) {
       setToken(storedToken);
       fetchTasks(storedToken);
@@ -108,7 +111,7 @@ const TaskDashboard: React.FC = () => {
                   </h6>
                   <p className="text-sm text-[#868686]">
                     Sync your notes across all devices. Stay productive whether
-                    you are on your phone, tablet, or computer.
+                    you're on your phone, tablet, or computer.
                   </p>
                 </div>
               </div>

@@ -21,6 +21,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ItemType } from "../types";
+import Cookies from "js-cookie";
 
 const TaskCard = ({ task }: any) => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -39,6 +40,10 @@ const TaskCard = ({ task }: any) => {
 
   const date = deadline.toLocaleDateString();
   const CreatedAtDate = CreatedAt.toISOString();
+
+
+
+  
 
   const calculateTimeAgo = (deadline: string): string => {
     const now = new Date();
@@ -65,7 +70,8 @@ const TaskCard = ({ task }: any) => {
 
   const handleEdit = async () => {
     try {
-      const token = localStorage.getItem("token");
+      // const token = localStorage.getItem("token");
+      const token = Cookies.get('token')
       const response = await fetch(`https://task-mgmt-e8us.onrender.com/tasks/${task.id}`, {
         method: "PUT",
         headers: {
@@ -90,7 +96,8 @@ const TaskCard = ({ task }: any) => {
 
   const handleDelete = async () => {
     try {
-      const token = localStorage.getItem("token");
+      // const token = localStorage.getItem("token");
+      const token = Cookies.get('token')
       const response = await fetch(`https://task-mgmt-e8us.onrender.com/tasks/${task.id}`, {
         method: "DELETE",
         headers: {
@@ -178,7 +185,7 @@ const TaskCard = ({ task }: any) => {
               />
               <Select
                 value={editedTask.priority}
-                onValueChange={(value) =>
+                onValueChange={(value:any) =>
                   setEditedTask({ ...editedTask, priority: value })
                 }
               >
@@ -201,7 +208,7 @@ const TaskCard = ({ task }: any) => {
               />
               <Select
                 value={editedTask.status}
-                onValueChange={(value) =>
+                onValueChange={(value:any) =>
                   setEditedTask({ ...editedTask, status: value })
                 }
               >

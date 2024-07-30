@@ -3,8 +3,10 @@
 import React, { useState } from "react";
 import { Plus, Loader, Calendar, PenTool, AlertCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
+import Cookies from 'js-cookie'
 
-const TaskCard = ({ status }: { status: string }) => {
+
+const page = ({ status }:any) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [dateTime, setDateTime] = useState("");
@@ -14,6 +16,7 @@ const TaskCard = ({ status }: { status: string }) => {
 
   const router = useRouter();
 
+
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
@@ -21,8 +24,8 @@ const TaskCard = ({ status }: { status: string }) => {
       setError("Please fill in all required fields.");
       return;
     }
-
-    const token = localStorage.getItem("token");
+    // const token = localStorage.getItem("token");
+    const token = Cookies.get('token')
 
     const task = {
       title,
@@ -163,4 +166,4 @@ const TaskCard = ({ status }: { status: string }) => {
   );
 };
 
-export default TaskCard;
+export default page;
