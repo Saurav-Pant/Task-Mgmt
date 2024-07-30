@@ -16,6 +16,9 @@ app.use(express_1.default.json());
 app.use((0, cors_1.default)());
 app.use("/auth", auth_1.default);
 app.use("/tasks", tasks_1.default);
+app.get("/", (req, res) => {
+    res.send("Hello World! CHecking Build Command");
+});
 const server = app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });

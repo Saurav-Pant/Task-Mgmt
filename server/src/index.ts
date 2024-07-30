@@ -16,6 +16,10 @@ app.use(cors());
 app.use("/auth", authRoutes);
 app.use("/tasks", taskRoutes);
 
+app.get("/", (req, res) => {
+  res.send("Hello World! CHecking Build Command");
+});
+
 const server = app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
