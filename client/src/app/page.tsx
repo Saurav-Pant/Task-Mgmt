@@ -1,10 +1,9 @@
 "use client";
 
 import React from "react";
-import Dashboard from "../app/Dashboard/page";
 import { useRouter } from "next/navigation";
 
-const page = () => {
+const Page = () => {
   const token = localStorage.getItem("token");
 
   const router = useRouter();
@@ -20,4 +19,4 @@ const page = () => {
   return <div></div>;
 };
 
-export default page;
+export default Page;
