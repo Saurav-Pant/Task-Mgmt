@@ -79,7 +79,7 @@ const Page = () => {
             </button>
           </form>
           <p className="mt-4 text-center text-gray-500">
-            Dont have an account? Create a 
+            Don't have an account? Create a 
             <Link href="/Signup">
               <span className="bg-clip-text text-transparent bg-[#0054A1] cursor-pointer pl-2 hover:underline">
                 new account

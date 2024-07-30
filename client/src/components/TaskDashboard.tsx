@@ -108,7 +108,7 @@ const TaskDashboard: React.FC = () => {
                   </h6>
                   <p className="text-sm text-[#868686]">
                     Sync your notes across all devices. Stay productive whether
-                    you're on your phone, tablet, or computer.
+                    you are on your phone, tablet, or computer.
                   </p>
                 </div>
               </div>
