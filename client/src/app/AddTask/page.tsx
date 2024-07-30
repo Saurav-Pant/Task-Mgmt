@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { Plus, Loader, Calendar, PenTool, AlertCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-const TaskCard = ({ status }: { status: string }) => {
+export const TaskCard = ({ status }: { status: string }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [dateTime, setDateTime] = useState("");
@@ -163,4 +163,3 @@ const TaskCard = ({ status }: { status: string }) => {
   );
 };
 
-export default TaskCard;
