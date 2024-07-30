@@ -1,7 +1,7 @@
 import React from "react";
 import { X, Share2, Star, Maximize2 } from "lucide-react";
 
-export const TaskCardHeader = ({ onClose }: any) => {
+ const TaskCardHeader = ({ onClose }: any) => {
   return (
     <div className="flex justify-between items-center border-gray-200 bg-white">
       <div className="flex space-x-3">
@@ -34,3 +34,5 @@ export const TaskCardHeader = ({ onClose }: any) => {
 };
 
 export default TaskCardHeader;
+
+

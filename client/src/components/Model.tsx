@@ -1,7 +1,7 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-export const Modal = ({ isOpen, onClose, children }: any) => {
+ const Modal = ({ isOpen, onClose, children }: any) => {
   return (
     <AnimatePresence>
       {isOpen && (
@@ -25,3 +25,5 @@ export const Modal = ({ isOpen, onClose, children }: any) => {
     </AnimatePresence>
   );
 };
+
+export default Modal;
