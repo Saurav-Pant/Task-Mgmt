@@ -10,6 +10,17 @@ This is a task management application built with Next.js for the frontend and Ex
 - Node.js (v14 or higher)
 - npm (v6 or higher)
 
+## Demo
+
+Below is a demo of the application:
+
+<video width="100%" controls>
+  <source src="client/Assets/video.mp4" type="video/webm">
+  Your browser does not support the video tag.
+</video>
+
+
+
 ## Setup
 
 1. **Clone the repository:**
