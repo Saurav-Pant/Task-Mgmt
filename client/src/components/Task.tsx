@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useState } from "react";
 import { Clock, Edit, Trash2 } from "lucide-react";
 import { useDrag } from "react-dnd";
@@ -22,11 +22,14 @@ import {
 import { ItemType } from "../types";
 import Cookies from "js-cookie";
 import LoadingSpinner from "./LoadingSpinner";
+import { useRouter } from "next/navigation";
 
 const TaskCard = ({ task }: any) => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editedTask, setEditedTask] = useState(task);
   const [isLoading, setIsLoading] = useState(false);
+
+  const router = useRouter();
 
   const [{ isDragging }, drag] = useDrag(() => ({
     type: ItemType.TASK,
@@ -67,22 +70,18 @@ const TaskCard = ({ task }: any) => {
 
   const Backend_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
-
   const handleEdit = async () => {
     setIsLoading(true);
     try {
       const token = Cookies.get("token");
-      const response = await fetch(
-        `${Backend_URL}/tasks/${task.id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(editedTask),
-        }
-      );
+      const response = await fetch(`${Backend_URL}/tasks/${task.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(editedTask),
+      });
 
       if (response.ok) {
         const updatedTask = await response.json();
@@ -103,19 +102,17 @@ const TaskCard = ({ task }: any) => {
     setIsLoading(true);
     try {
       const token = Cookies.get("token");
-      const response = await fetch(
-        `${Backend_URL}/tasks/${task.id}`,
-        {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await fetch(`${Backend_URL}/tasks/${task.id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       if (response.ok) {
         console.log("Successfully deleted task");
         window.location.reload();
+        router.refresh();
       } else {
         console.error("Failed to delete task");
       }
@@ -140,7 +137,7 @@ const TaskCard = ({ task }: any) => {
       <p className="text-sm text-[#797979] mb-2 leading-4">
         {task.description}
       </p>
-      <div className="flex justify-between items-center">
+      {task.priority != "Not Selected" ? (
         <span
           className={`text-xs px-2 py-1 rounded-lg ${
             task.priority === "URGENT"
@@ -156,12 +153,14 @@ const TaskCard = ({ task }: any) => {
         >
           {task.priority}
         </span>
-      </div>
+      ) : null}
       <div className="text-xs text-[#606060] mt-2">
-        <div className="flex items-center gap-2">
-          <Clock size={16} />
-          <span>{date}</span>
-        </div>
+        {task.deadline != null ? (
+          <div className="flex items-center gap-2">
+            <Clock size={16} />
+            <span>{date}</span>
+          </div>
+        ) : null}
       </div>
       <p className="text-[#797979] text-sm pl-1 pt-3">
         {calculateTimeAgo(CreatedAtDate)}
@@ -233,13 +232,26 @@ const TaskCard = ({ task }: any) => {
                 </SelectContent>
               </Select>
             </div>
-            <Button onClick={handleEdit} disabled={isLoading}>
+            <Button
+              onClick={handleEdit}
+              disabled={isLoading}
+              className="bg-gradient-to-b from-[#4C38C2] to-[#2F2188]"
+            >
               {isLoading ? <LoadingSpinner /> : "Save Changes"}
             </Button>
           </DialogContent>
         </Dialog>
-        <Button variant="ghost" size="icon" onClick={handleDelete} disabled={isLoading}>
-          {isLoading ? <LoadingSpinner /> : <Trash2 size={16} className="text-red-500" />}
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={handleDelete}
+          disabled={isLoading}
+        >
+          {isLoading ? (
+            <LoadingSpinner />
+          ) : (
+            <Trash2 size={16} className="text-red-500" />
+          )}
         </Button>
       </div>
     </div>

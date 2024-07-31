@@ -6,7 +6,7 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import Sidebar from "./Sidebar";
 import Column from "./Column";
 import { TaskType } from "../types";
-import { Search, Calendar, Zap, Filter, Share } from "lucide-react";
+import { Search, Calendar, Zap, Filter, Share, CircleHelp } from "lucide-react";
 import Image from "next/image";
 import First from "../../Assets/First.png";
 import Second from "../../Assets/Second.png";
@@ -29,9 +29,8 @@ const TaskDashboard: React.FC = () => {
 
   const Backend_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
-
   const fetchTasks = (authToken: string) => {
-      fetch(`${Backend_URL}/tasks`, {
+    fetch(`${Backend_URL}/tasks`, {
       headers: {
         Authorization: `Bearer ${authToken}`,
       },
@@ -76,9 +75,16 @@ const TaskDashboard: React.FC = () => {
         <Sidebar />
         <div className="flex-1 flex flex-col p-4 bg-gray-100 mb-6 mt-2">
           <div className="mb-4 overflow">
-            <div className="flex items-center justify-between">
-              <h1 className="text-2xl font-bold">Good Morning, {name}!</h1>
+            <div className="flex justify-between items-center">
+              <h1 className="text-2xl font-bold">Good morning, {name}!</h1>
+              <div className="flex items-center space-x-2 mr-6 font-normal text-base text-[#080808]">
+                <p>Help & Feedback</p>
+                <span>
+                  <CircleHelp />
+                </span>
+              </div>
             </div>
+
             <div className="mt-4 flex gap-4 overflow-hidden">
               <div className="h-32 w-[363px] p-4 bg-white border rounded flex items-center gap-4 flex-shrink-0">
                 <Image src={First} width={200} height={200} alt="First" />

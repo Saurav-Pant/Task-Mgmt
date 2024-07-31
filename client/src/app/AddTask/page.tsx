@@ -132,7 +132,7 @@ const page = ({ status }: any) => {
 
         <button
           type="button"
-          className="mt-4 flex items-center text-blue-500 hover:text-blue-700"
+          className="mt-4 flex items-center text-[#000000]"
         >
           <Plus size={16} className="mr-1" />
           Add custom property

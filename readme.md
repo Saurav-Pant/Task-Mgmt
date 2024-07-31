@@ -93,3 +93,10 @@ This is a task management application built with Next.js for the frontend and Ex
    The backend will run on `http://localhost:3002`.
 
 
+If you are familiar with Docker, you can run this using Docker as well. Set the environment variable, build the image, and then run the image.
+
+
+
+
+
+
