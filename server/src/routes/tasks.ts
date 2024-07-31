@@ -24,15 +24,15 @@ router.post("/", authenticateToken, async (req: Request, res: Response) => {
   try {
     const deadlineDate = deadline ? new Date(deadline) : null;
 
+    const deadlineISO = deadlineDate ? deadlineDate.toISOString() : null;
+
     const task = await prisma.task.create({
       data: {
         title,
         description,
         dateTime: dateTime ? new Date(dateTime) : null,
-        // @ts-ignore
-        priority: priority ? (priority as Priority) : null,
-        // @ts-ignore
-        deadline: deadlineDate ? deadline : null,
+        priority: priority ? priority : null,
+        deadline: deadlineISO,
         status: status as TaskStatus,
         user: {
           connect: { id: userId },

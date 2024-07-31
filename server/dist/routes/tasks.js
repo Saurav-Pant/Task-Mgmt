@@ -29,16 +29,17 @@ router.post("/", authMiddleware_1.authenticateToken, (req, res) => __awaiter(voi
     const { title, description, dateTime, priority, deadline, status } = req.body;
     const userId = req.user.id;
     try {
+        // Ensure the deadline is a valid Date or null
         const deadlineDate = deadline ? new Date(deadline) : null;
+        // If deadline is a valid Date object, convert it to ISO string
+        const deadlineISO = deadlineDate ? deadlineDate.toISOString() : null;
         const task = yield prisma.task.create({
             data: {
                 title,
                 description,
                 dateTime: dateTime ? new Date(dateTime) : null,
-                // @ts-ignore
                 priority: priority ? priority : null,
-                // @ts-ignore
-                deadline: deadlineDate ? deadline : null,
+                deadline: deadlineISO,
                 status: status,
                 user: {
                     connect: { id: userId },

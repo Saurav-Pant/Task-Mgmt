@@ -34,6 +34,9 @@ const page = ({ status }: any) => {
       deadline,
       status,
     };
+
+    // console.log("Submitting task:", task); 
+
   
     setIsLoading(true); 
 
@@ -125,7 +128,7 @@ const page = ({ status }: any) => {
               onChange={(e) => setDescription(e.target.value)}
               className="flex-grow p-1 border rounded resize"
               // @ts-ignore
-              rows="3"
+              rows="2"
             ></textarea>
           </div>
         </div>
