@@ -67,7 +67,7 @@ router.put("/:id", async (req, res) => {
   const { id } = req.params;
   const { title, description, dateTime, priority, deadline, status } = req.body;
 
-  const deadlineDate = deadline;
+  const deadlineDate = deadline ? new Date(deadline) : null;
 
   try {
     const updatedTask = await prisma.task.update({

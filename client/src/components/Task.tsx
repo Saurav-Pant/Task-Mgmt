@@ -26,7 +26,12 @@ import { useRouter } from "next/navigation";
 
 const TaskCard = ({ task }: any) => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [editedTask, setEditedTask] = useState(task);
+  const [editedTask, setEditedTask] = useState({
+    ...task,
+    deadline: task.deadline
+      ? new Date(task.deadline).toISOString().slice(0, 16)
+      : "",
+  });
   const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
@@ -215,6 +220,7 @@ const TaskCard = ({ task }: any) => {
                   setEditedTask({ ...editedTask, deadline: e.target.value })
                 }
               />
+
               <Select
                 value={editedTask.status}
                 onValueChange={(value: any) =>
