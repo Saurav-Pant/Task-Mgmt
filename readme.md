@@ -15,7 +15,7 @@ This is a task management application built with Next.js for the frontend and Ex
 Below is a demo of the application:
 
 <video width="100%" controls>
-  <source src="client/Assets/video.mp4" type="video/webm">
+  <source src="video.mp4" type="video/mp4">
   Your browser does not support the video tag.
 </video>
 
